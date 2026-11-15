@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>LT</title>
+<title>Love Letter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -279,7 +279,7 @@ body{
           <polyline points="12,12 68,56 124,12" fill="none" stroke="#e8736f" stroke-width="2"/>
           <path d="M68 52 l-7 -7 a4.2 4.2 0 0 1 7 -5 a4.2 4.2 0 0 1 7 5 z" fill="#e23b3b"/>
         </svg>
-        <p class="target__label"><b>♥</b><span id="label">From Name For You</span><b>♥</b></p>
+        <p class="target__label"><b>♥</b><span id="label">From Ripkuyy For You</span><b>♥</b></p>
       </div>
     </div>
 
@@ -336,6 +336,8 @@ body{
 
 <div class="cursor-dot" id="cursorDot"></div>
 
+<!-- Backsound Shape of My Heart -->
+<audio id="backsound" src="shape-of-my-heart.mp3" loop preload="auto"></audio>
 
 <script>
 (() => {
@@ -345,7 +347,7 @@ body{
      EDIT THESE TEXTS
      ===================================================== */
   const CONFIG = {
-    sender:   'Ripkuy',                               // → "From Ripkuy For You"
+    sender:   'Ripkuyy',                            // → "From Ripkuyy For You"
     question: 'Do you want to be my girlfriend? ♡',
     yesText:  'YES',
     noText:   'NO',
@@ -361,9 +363,16 @@ body{
         askStage = $('askStage'), win = $('win'), winBody = $('winBody'),
         msg = $('msg'), catEl = $('cat'), yes = $('yes'), no = $('no'),
         btns = $('btns'), after = $('after'), rain = $('rain'),
-        confetti = $('confetti'), dot = $('cursorDot');
+        confetti = $('confetti'), dot = $('cursorDot'),
+        backsound = $('backsound');
   const rnd = (a, b) => a + Math.random() * (b - a);
   const pick = (arr) => arr[(Math.random() * arr.length) | 0];
+
+  function playMusic() {
+    if (backsound && backsound.paused) {
+      backsound.play().catch(() => {});
+    }
+  }
 
   /* ---------- texts ---------- */
   $('label').textContent = `From ${CONFIG.sender} For You`;
@@ -486,6 +495,7 @@ body{
 
   function shoot() {
     if (stage !== 1 || flying || opened) return;
+    playMusic();
     flying = true;
     hint.classList.add('fade');
     bow.classList.remove('recoil'); void bow.offsetWidth; bow.classList.add('recoil');
@@ -543,6 +553,7 @@ body{
   }
 
   aimStage.addEventListener('pointerdown', (e) => {
+    playMusic();
     if (e.pointerType !== 'mouse') aimAt(e.clientX, e.clientY);
     px = e.clientX; py = e.clientY;
     aimAt(px, py);
@@ -613,6 +624,7 @@ body{
 
   yes.addEventListener('click', () => {
     if (win.classList.contains('yes')) return;
+    playMusic();
     win.classList.add('yes');
     msg.textContent = CONFIG.winTitle;
     catEl.innerHTML = catSVG(CAT_HAPPY);
